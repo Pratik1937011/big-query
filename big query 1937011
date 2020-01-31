@@ -1,0 +1,232 @@
+/******************************
+** File: Assignment.sql
+** Name: Pratik Shukla
+** Date: 30-Jan-2020
+*******************************/
+
+/* Q1) What is the Clearance Status for Unique Key='20151340282'? */
+
+SELECT clearance_status FROM `bigquery-public-data.austin_crime.crime` 
+WHERE unique_key=20151340282 LIMIT 1000;
+
+/* ANS: "Cleared by Exception" */
+
+/* Q2) What is the count of crime happened in in District "UK"? */
+
+SELECT COUNT(*) FROM `bigquery-public-data.austin_crime.crime` WHERE DISTRICT='UK' LIMIT 1000;
+
+/* ANS: 378 */
+
+/* Q3) What was the total attendance in the year 2016? */
+
+SELECT SUM(attendance) FROM `bigquery-public-data.baseball.schedules` where year=2016  LIMIT 1000;
+
+/* ANS: 73282447 */
+
+
+/* Q4) What was the total attendance at VenueSurface= 'grass'? */
+
+SELECT SUM(a.attendance) FROM `bigquery-public-data.baseball.schedules` a 
+inner join `bigquery-public-data.baseball.games_post_wide` b 
+on a.seasonId=b.seasonId 
+where  b.VenueSurface='grass' LIMIT 1000;
+
+/* 527780183294  */
+
+/* Q5) List all Area Name for state_fips_code = 01 ?*/
+
+SELECT a.area_name FROM `bigquery-public-data.census_utility.fips_codes_all` a inner Join `bigquery-public-data.census_utility.fips_codes_states`b
+on a.state=b.state_fips_code where b.state_fips_code='01' LIMIT 1000;
+
+
+/* ANS:
+Alabama
+Autauga County
+Baldwin County
+Barbour County
+Bibb County
+Blount County
+Bullock County
+Butler County
+Calhoun County
+Chambers County
+Cherokee County
+Chilton County
+Choctaw County
+Clarke County
+Clay County
+Cleburne County
+Coffee County
+Colbert County
+Conecuh County
+Coosa County
+Covington County
+Crenshaw County
+Cullman County
+Dale County
+Dallas County
+DeKalb County
+Elmore County
+Escambia County
+Etowah County
+Fayette County
+Franklin County
+Geneva County
+Greene County
+Hale County
+Henry County
+Houston County
+Jackson County
+Jefferson County
+Lamar County
+Lauderdale County
+Lawrence County
+Lee County
+Limestone County
+Lowndes County
+Macon County
+Madison County
+Marengo County
+Marion County
+Marshall County
+Mobile County
+Monroe County
+Montgomery County
+Morgan County
+Perry County
+Pickens County
+Pike County
+Randolph County
+Russell County
+St. Clair County
+Shelby County
+Sumter County
+Talladega County
+Tallapoosa County
+Tuscaloosa County
+Walker County
+Washington County
+Wilcox County
+Winston County
+*/
+
+/* Q6) List all types of Complaint submission? */
+
+select Distinct submitted_via from `bigquery-public-data.cfpb_complaints.complaint_database` ;
+
+/* ANS:
+Web
+Referral
+Phone
+Postal mail
+*/
+
+/* Q7) List all types of Complaint submission and the count for each of the types? */
+
+select  submitted_via, count(*) from `bigquery-public-data.cfpb_complaints.complaint_database` 
+group by submitted_via;
+
+/* ANS:
+Web			1117243
+Referral	187798
+Phone		89123
+Postal mail	72727
+Fax			20362
+Email		411
+*/
+
+
+/* Q8) How many THEFT cases happened in BANK in the Year 2008 ? */
+
+SELECT count(*) FROM `bigquery-public-data.chicago_crime.crime`
+where location_description='BANK' and year=2008 and primary_type='THEFT' LIMIT 1000;
+
+/* ANS: 356 */
+
+
+/* Q9) Find Out the top 10 Advertiser according to their spend? */
+
+SELECT advertiser ,  sum(grossSpend) FROM `bigquery-public-data.fcc_political_ads.content_info` 
+group by advertiser order by sum(grossSpend) desc LIMIT 10
+
+/* ANS:
+Steyer/D/President					1608320100
+Tom Steyer 2020						1275349000
+Steyer for President				1084932500
+Tom Steyer for President-D			655003800
+POL/Tom Steyer/President/US/Dem		438381600
+Tom Steyer for President-D (131795)	353323600
+ROMNEY FOR PRESIDENT				319209800
+LINDA MCMAHON FOR SENATE 2012		287513500
+OBAMA FOR AMERICA					232578000
+TOM STEYER 2020 (4913)				216287800
+*/
+
+/* Q10) Find Out the area name and there corresponding summary_level_name for state='Montana'? */
+
+SELECT a.area_name, a.summary_level_name FROM `bigquery-public-data.census_utility.fips_codes_all` a , `bigquery-public-data.census_utility.fips_codes_states`b
+where  a.state=b.state_fips_code and STATE_NAME='Montana'  LIMIT 1000;
+
+/* ANS:
+Montana						state
+Beaverhead County			state-county
+Big Horn County				state-county
+Blaine County				state-county
+Broadwater County			state-county
+Carbon County				state-county
+Carter County				state-county
+Cascade County				state-county
+Chouteau County				state-county
+Custer County				state-county
+Daniels County				state-county
+Dawson County				state-county
+Deer Lodge County			state-county
+Fallon County				state-county
+Fergus County				state-county
+Flathead County				state-county
+Gallatin County				state-county
+Garfield County				state-county
+Glacier County				state-county
+Golden Valley County		state-county
+Granite County				state-county
+Hill County					state-county
+Jefferson County			state-county
+Judith Basin County			state-county
+Lake County					state-county
+Lewis and Clark County		state-county
+Liberty County				state-county
+Lincoln County				state-county
+McCone County				state-county
+Madison County				state-county
+Meagher County				state-county
+Mineral County				state-county
+Missoula County				state-county
+Musselshell County			state-county
+Park County					state-county
+Petroleum County			state-county
+Phillips County				state-county
+Pondera County				state-county
+Powder River County			state-county
+Powell County				state-county
+Prairie County				state-county
+Ravalli County				state-county
+Richland County				state-county
+Roosevelt County			state-county
+Rosebud County				state-county
+Sanders County				state-county
+Sheridan County				state-county
+Silver Bow County			state-county
+Stillwater County			state-county
+Sweet Grass County			state-county
+Teton County				state-county
+Toole County				state-county
+Treasure County				state-county
+Valley County				state-county
+Wheatland County			state-county
+Wibaux County				state-county
+Yellowstone County			state-county
+Butte-Silver Bow			state-consolidated city
+*/
+
+
+
